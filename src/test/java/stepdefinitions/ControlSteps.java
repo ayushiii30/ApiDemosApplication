@@ -1,104 +1,173 @@
-////package stepdefinitions;
-////
-////import base.BaseTest;
-////import io.appium.java_client.AppiumBy;
-////import io.cucumber.java.en.*;
-////import org.openqa.selenium.By;
-////import org.openqa.selenium.support.ui.ExpectedConditions;
-////import org.openqa.selenium.support.ui.WebDriverWait;
-////
-////import java.time.Duration;
-////
-////import static org.testng.Assert.assertTrue;
-////
-////public class ControlSteps extends BaseTest {
-////
-////    WebDriverWait wait;
-////
-////    @Given("the user launches the ApiDemos application")
-////    public void the_user_launches_the_apidemos_application() {
-////        // driver initialized in Hooks
-////        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-////    }
-////
-////    @When("the user navigates to Views")
-////    public void the_user_navigates_to_views() {
-////        wait.until(ExpectedConditions.elementToBeClickable(
-////                AppiumBy.accessibilityId("Views"))).click();
-////    }
-////
-////    @And("the user opens Controls")
-////    public void the_user_opens_controls() {
-////        wait.until(ExpectedConditions.elementToBeClickable(
-////                AppiumBy.accessibilityId("Controls"))).click();
-////    }
-////
-////    // -------------------- Theme Selection --------------------
-////
-////    @And("the user selects Light Theme")
-////    public void the_user_selects_light_theme() {
-////        wait.until(ExpectedConditions.elementToBeClickable(
-////                AppiumBy.accessibilityId("1. Light Theme"))).click();
-////    }
-////
-////    @And("the user selects Dark Theme")
-////    public void the_user_selects_dark_theme() {
-////        wait.until(ExpectedConditions.elementToBeClickable(
-////                AppiumBy.accessibilityId("2. Dark Theme"))).click();
-////    }
-////
-////    // -------------------- Validation --------------------
-////
-////    @Then("the Controls Light Theme screen should be displayed")
-////    public void the_controls_light_theme_screen_should_be_displayed() {
-////        boolean isDisplayed = wait.until(
-////                ExpectedConditions.visibilityOfElementLocated(
-////                        By.id("io.appium.android.apis:id/edit"))).isDisplayed();
-////        assertTrue(isDisplayed, "Controls Light Theme screen is NOT displayed");
-////    }
-////
-////    @Then("the Controls Dark Theme screen should be displayed")
-////    public void the_controls_dark_theme_screen_should_be_displayed() {
-////        boolean isDisplayed = wait.until(
-////                ExpectedConditions.visibilityOfElementLocated(
-////                        By.id("io.appium.android.apis:id/edit"))).isDisplayed();
-////        assertTrue(isDisplayed, "Controls Dark Theme screen is NOT displayed");
-////    }
-////
-////    // -------------------- Common Input Steps --------------------
-////
-////    @And("the user enters text in the input field")
-////    public void the_user_enters_text_in_the_input_field() {
-////        wait.until(ExpectedConditions.visibilityOfElementLocated(
-////                By.id("io.appium.android.apis:id/edit")))
-////                .sendKeys("Hello Appium");
-////    }
-////
-////    @And("the user selects a checkbox")
-////    public void the_user_selects_a_checkbox() {
-////        wait.until(ExpectedConditions.elementToBeClickable(
-////                By.id("io.appium.android.apis:id/check1"))).click();
-////    }
-////
-////    @And("the user selects a radio button")
-////    public void the_user_selects_a_radio_button() {
-////        wait.until(ExpectedConditions.elementToBeClickable(
-////                By.id("io.appium.android.apis:id/radio1"))).click();
-////    }
-////
-////    @And("the user selects an option from the dropdown")
-////    public void the_user_selects_an_option_from_the_dropdown() {
-////        wait.until(ExpectedConditions.elementToBeClickable(
-////                By.id("io.appium.android.apis:id/spinner1"))).click();
-////
-////        wait.until(ExpectedConditions.elementToBeClickable(
-////                By.xpath("//android.widget.CheckedTextView[@text='Earth']"))).click();
-////    }
-////}
+//package stepdefinitions;
+//
+//import base.BaseTest;
+//import io.appium.java_client.AppiumBy;
+//import io.cucumber.java.en.*;
+//import utils.WaitUtils;
+//
+//import org.openqa.selenium.By;
+//import org.openqa.selenium.WebElement;
+//import org.openqa.selenium.support.ui.ExpectedConditions;
+//import org.openqa.selenium.support.ui.WebDriverWait;
+//
+//import java.time.Duration;
+//
+//import static org.testng.Assert.assertTrue;
+//
+//public class ControlSteps extends BaseTest {
+//
+//    WebDriverWait wait;
+//
+//    @Given("the user launches the ApiDemos application")
+//    public void the_user_launches_the_apidemos_application() {
+//        // driver initialized in Hooks
+//    	wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+//
+//    }
+//
+//    // -------------------- Controls Scenarios --------------------
+//
+//    @When("the user navigates to Views")
+//    public void the_user_navigates_to_views() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.accessibilityId("Views"))).click();
+//    }
+//
+//    @And("the user opens Controls")
+//    public void the_user_opens_controls() {
+//
+//        // Allow UI to stabilize after clicking Views
+//        try { Thread.sleep(1200); } catch (InterruptedException e) {}
+//
+//        WebElement controls = driver.findElement(
+//                AppiumBy.androidUIAutomator(
+//                        "new UiScrollable(new UiSelector().scrollable(true))" +
+//                        ".scrollIntoView(new UiSelector().text(\"Controls\"));"
+//                )
+//        );
+//        controls.click();
+//    }
 //
 //
+//    @And("the user selects Light Theme")
+//    public void the_user_selects_light_theme() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.accessibilityId("1. Light Theme"))).click();
+//    }
 //
+//    @And("the user selects Dark Theme")
+//    public void the_user_selects_dark_theme() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.accessibilityId("2. Dark Theme"))).click();
+//    }
 //
+//    @Then("the Controls Light Theme screen should be displayed")
+//    public void the_controls_light_theme_screen_should_be_displayed() {
+//        boolean isDisplayed = wait.until(
+//                ExpectedConditions.visibilityOfElementLocated(
+//                        By.id("io.appium.android.apis:id/edit"))).isDisplayed();
+//        assertTrue(isDisplayed, "Controls Light Theme screen is NOT displayed");
+//    }
+//
+//    @Then("the Controls Dark Theme screen should be displayed")
+//    public void the_controls_dark_theme_screen_should_be_displayed() {
+//        boolean isDisplayed = wait.until(
+//                ExpectedConditions.visibilityOfElementLocated(
+//                        By.id("io.appium.android.apis:id/edit"))).isDisplayed();
+//        assertTrue(isDisplayed, "Controls Dark Theme screen is NOT displayed");
+//    }
+//
+//    @And("the user enters text in the input field")
+//    public void the_user_enters_text_in_the_input_field() {
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(
+//                By.id("io.appium.android.apis:id/edit"))).sendKeys("Hello Appium");
+//    }
+//
+//    @And("the user selects a checkbox")
+//    public void the_user_selects_a_checkbox() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                By.id("io.appium.android.apis:id/check1"))).click();
+//    }
+//
+//    @And("the user selects a radio button")
+//    public void the_user_selects_a_radio_button() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                By.id("io.appium.android.apis:id/radio1"))).click();
+//    }
+//
+//    @And("the user selects an option from the dropdown")
+//    public void the_user_selects_an_option_from_the_dropdown() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                By.id("io.appium.android.apis:id/spinner1"))).click();
+//
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                By.xpath("//android.widget.CheckedTextView[@text='Earth']"))).click();
+//    }
+//
+//    // -------------------- Animation / Multiple Properties --------------------
+//
+//    @When("the user opens Animation")
+//    public void the_user_opens_animation() {
+//        // Animation is directly on main screen
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.accessibilityId("Animation"))).click();
+//    }
+//
+//    @And("the user selects {string}")
+//    public void the_user_selects_animation_option(String option) {
+//        // Scroll to the option and click
+//        WebElement animationOption = driver.findElement(AppiumBy.androidUIAutomator(
+//                "new UiScrollable(new UiSelector().scrollable(true))" +
+//                        ".scrollIntoView(new UiSelector().text(\"" + option + "\"));"));
+//        animationOption.click();
+//    }
+//
+//    @Then("the Multiple Properties screen should be displayed")
+//    public void the_multiple_properties_screen_should_be_displayed() {
+//        // Wait for the correct activity to load
+//        wait.until(driver -> ((io.appium.java_client.android.AndroidDriver) driver)
+//                .currentActivity().equals(".animation.MultiPropertyAnimation"));
+//
+//        // Wait for Run button to be clickable
+//        WebElement runButton = wait.until(
+//                ExpectedConditions.elementToBeClickable(
+//                        By.id("io.appium.android.apis:id/startButton")));
+//        assertTrue(runButton.isDisplayed(), "Multiple Properties screen is NOT displayed");
+//    }
+//
+//    @And("the user performs the animation")
+//    public void the_user_performs_the_animation() {
+//        // Wait for the Run button
+//        WebElement runButton = wait.until(
+//                ExpectedConditions.elementToBeClickable(
+//                        By.id("io.appium.android.apis:id/startButton")));
+//        runButton.click();
+//
+//        // Optional: wait for animation to complete
+//        try { Thread.sleep(2000); } catch (InterruptedException e) { e.printStackTrace(); }
+//    }
+//    @When("the user opens Graphics")
+//    public void the_user_opens_graphics() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.accessibilityId("Graphics"))).click();
+//    }
+//    @And("the user opens Arcs")
+//    public void the_user_opens_arcs() {
+//        WebElement arcs = driver.findElement(
+//                AppiumBy.androidUIAutomator(
+//                        "new UiScrollable(new UiSelector().scrollable(true))" +
+//                        ".scrollIntoView(new UiSelector().text(\"Arcs\"));"));
+//        arcs.click();
+//    }
+//    @Then("the Arcs screen should be displayed")
+//    public void the_arcs_screen_should_be_displayed() {
+//        WaitUtils.waitForActivity(driver, ".graphics.Arcs", 10);
+//    }
+//    
+//  
+//}
+//
+
 package stepdefinitions;
 
 import base.BaseTest;
@@ -108,10 +177,13 @@ import utils.WaitUtils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Collections;
 
 import static org.testng.Assert.assertTrue;
 
@@ -119,13 +191,14 @@ public class ControlSteps extends BaseTest {
 
     WebDriverWait wait;
 
+    // -------------------- Common --------------------
+
     @Given("the user launches the ApiDemos application")
     public void the_user_launches_the_apidemos_application() {
-        // driver initialized in Hooks
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
-    // -------------------- Controls Scenarios --------------------
+    // -------------------- Controls --------------------
 
     @When("the user navigates to Views")
     public void the_user_navigates_to_views() {
@@ -153,18 +226,14 @@ public class ControlSteps extends BaseTest {
 
     @Then("the Controls Light Theme screen should be displayed")
     public void the_controls_light_theme_screen_should_be_displayed() {
-        boolean isDisplayed = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(
-                        By.id("io.appium.android.apis:id/edit"))).isDisplayed();
-        assertTrue(isDisplayed, "Controls Light Theme screen is NOT displayed");
+        assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.id("io.appium.android.apis:id/edit"))).isDisplayed());
     }
 
     @Then("the Controls Dark Theme screen should be displayed")
     public void the_controls_dark_theme_screen_should_be_displayed() {
-        boolean isDisplayed = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(
-                        By.id("io.appium.android.apis:id/edit"))).isDisplayed();
-        assertTrue(isDisplayed, "Controls Dark Theme screen is NOT displayed");
+        assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.id("io.appium.android.apis:id/edit"))).isDisplayed());
     }
 
     @And("the user enters text in the input field")
@@ -194,67 +263,121 @@ public class ControlSteps extends BaseTest {
                 By.xpath("//android.widget.CheckedTextView[@text='Earth']"))).click();
     }
 
-    // -------------------- Animation / Multiple Properties --------------------
+    // -------------------- Animation --------------------
 
     @When("the user opens Animation")
     public void the_user_opens_animation() {
-        // Animation is directly on main screen
         wait.until(ExpectedConditions.elementToBeClickable(
                 AppiumBy.accessibilityId("Animation"))).click();
     }
 
     @And("the user selects {string}")
-    public void the_user_selects_animation_option(String option) {
-        // Scroll to the option and click
-        WebElement animationOption = driver.findElement(AppiumBy.androidUIAutomator(
-                "new UiScrollable(new UiSelector().scrollable(true))" +
-                        ".scrollIntoView(new UiSelector().text(\"" + option + "\"));"));
-        animationOption.click();
+    public void the_user_selects_option(String optionText) {
+
+        // First try direct click (MOST IMPORTANT)
+        try {
+            driver.findElement(By.xpath(
+                    "//android.widget.TextView[@text='" + optionText + "']"
+            )).click();
+            return;
+        } catch (Exception e) {
+            // fallback to scroll
+        }
+
+        // Fallback scroll ONLY if not visible
+        driver.findElement(AppiumBy.androidUIAutomator(
+                "new UiScrollable(new UiSelector())" +
+                ".scrollIntoView(new UiSelector().text(\"" + optionText + "\"))"
+        )).click();
     }
+
 
     @Then("the Multiple Properties screen should be displayed")
     public void the_multiple_properties_screen_should_be_displayed() {
-        // Wait for the correct activity to load
-        wait.until(driver -> ((io.appium.java_client.android.AndroidDriver) driver)
-                .currentActivity().equals(".animation.MultiPropertyAnimation"));
-
-        // Wait for Run button to be clickable
         WebElement runButton = wait.until(
                 ExpectedConditions.elementToBeClickable(
                         By.id("io.appium.android.apis:id/startButton")));
-        assertTrue(runButton.isDisplayed(), "Multiple Properties screen is NOT displayed");
+        assertTrue(runButton.isDisplayed());
     }
 
-    @And("the user performs the animation")
-    public void the_user_performs_the_animation() {
-        // Wait for the Run button
-        WebElement runButton = wait.until(
-                ExpectedConditions.elementToBeClickable(
-                        By.id("io.appium.android.apis:id/startButton")));
-        runButton.click();
+  @And("the user performs the animation")
+  public void the_user_performs_the_animation() {
+      // Wait for the Run button
+      WebElement runButton = wait.until(
+              ExpectedConditions.elementToBeClickable(
+                      By.id("io.appium.android.apis:id/startButton")));
+      runButton.click();
 
-        // Optional: wait for animation to complete
-        try { Thread.sleep(2000); } catch (InterruptedException e) { e.printStackTrace(); }
-    }
-    @When("the user opens Graphics")
-    public void the_user_opens_graphics() {
-        wait.until(ExpectedConditions.elementToBeClickable(
-                AppiumBy.accessibilityId("Graphics"))).click();
-    }
-    @And("the user opens Arcs")
-    public void the_user_opens_arcs() {
-        WebElement arcs = driver.findElement(
-                AppiumBy.androidUIAutomator(
-                        "new UiScrollable(new UiSelector().scrollable(true))" +
-                        ".scrollIntoView(new UiSelector().text(\"Arcs\"));"));
-        arcs.click();
-    }
-    @Then("the Arcs screen should be displayed")
-    public void the_arcs_screen_should_be_displayed() {
-        WaitUtils.waitForActivity(driver, ".graphics.Arcs", 10);
+      // Optional: wait for animation to complete
+      try { Thread.sleep(2000); } catch (InterruptedException e) { e.printStackTrace(); }
+  }
+
+    // -------------------- Graphics --------------------
+
+@When("the user opens Graphics")
+public void the_user_opens_graphics() {
+    wait.until(ExpectedConditions.elementToBeClickable(
+            AppiumBy.accessibilityId("Graphics"))).click();
+}
+@And("the user opens Arcs")
+public void the_user_opens_arcs() {
+    WebElement arcs = driver.findElement(
+            AppiumBy.androidUIAutomator(
+                    "new UiScrollable(new UiSelector().scrollable(true))" +
+                    ".scrollIntoView(new UiSelector().text(\"Arcs\"));"));
+    arcs.click();
+}
+@Then("the Arcs screen should be displayed")
+public void the_arcs_screen_should_be_displayed() {
+    WaitUtils.waitForActivity(driver, ".graphics.Arcs", 10);
+}
+
+
+    // -------------------- Seek Bar (W3C Actions) --------------------
+
+    @Then("the Seek Bar screen should be displayed")
+    public void the_seek_bar_screen_should_be_displayed() {
+        WebElement seekBar = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.className("android.widget.SeekBar")));
+        assertTrue(seekBar.isDisplayed(), "Seek Bar screen not displayed");
     }
 
 
+    @And("the user moves the slider to 20 percent")
+    public void the_user_moves_the_slider_to_20_percent() {
 
+        WebElement seekBar = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.className("android.widget.SeekBar")));
+
+        int startX = seekBar.getLocation().getX();
+        int endX = startX + seekBar.getSize().getWidth();
+        int yAxis = seekBar.getLocation().getY()
+                + (seekBar.getSize().getHeight() / 2);
+
+        int moveToX = startX + (int) ((endX - startX) * 0.20);
+
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence drag = new Sequence(finger, 1);
+
+        drag.addAction(finger.createPointerMove(
+                Duration.ZERO,
+                PointerInput.Origin.viewport(),
+                startX, yAxis));
+
+        drag.addAction(finger.createPointerDown(
+                PointerInput.MouseButton.LEFT.asArg()));
+
+        drag.addAction(finger.createPointerMove(
+                Duration.ofMillis(600),
+                PointerInput.Origin.viewport(),
+                moveToX, yAxis));
+
+        drag.addAction(finger.createPointerUp(
+                PointerInput.MouseButton.LEFT.asArg()));
+
+        driver.perform(Collections.singletonList(drag));
+    }
 }
 

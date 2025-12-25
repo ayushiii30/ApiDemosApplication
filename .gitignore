@@ -1,25 +1,13 @@
-# Eclipse IDE files
-.metadata/
-.settings/
-.project
-.classpath
-
-# Maven / Java build files
 target/
-bin/
-*.class
-*.log
-
-# TestNG / Cucumber / Appium reports
+.classpath
+.project
+.settings/
 test-output/
-screenshots/
-*.png
-*.html
-
-# IntelliJ / IDEA files (if ever used)
-.idea/
-*.iml
-
-# OS generated files
+reports/
+allure-results/
+allure-report/
+*.log
+*.apk
+node_modules/
 .DS_Store
 Thumbs.db
