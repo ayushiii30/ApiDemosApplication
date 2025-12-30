@@ -172,18 +172,26 @@ package stepdefinitions;
 
 import base.BaseTest;
 import io.appium.java_client.AppiumBy;
+import io.appium.java_client.android.Activity;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.cucumber.java.en.*;
 import utils.WaitUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.testng.Assert.assertTrue;
 
@@ -379,5 +387,208 @@ public void the_arcs_screen_should_be_displayed() {
 
         driver.perform(Collections.singletonList(drag));
     }
+ // -------------------- OS -> SMS Messaging --------------------
+
+    @And("the user navigates to OS menu")
+    public void the_user_navigates_to_os_menu() {
+        wait.until(ExpectedConditions.elementToBeClickable(
+                AppiumBy.accessibilityId("OS"))).click();
+    }
+
+    @And("the user opens SMS Messaging screen")
+    public void the_user_opens_sms_messaging_screen() {
+        wait.until(ExpectedConditions.elementToBeClickable(
+                AppiumBy.accessibilityId("SMS Messaging"))).click();
+    }
+    
+
+
+    @When("the user enters recipient number {string}")
+    public void the_user_enters_recipient_number(String number) {
+
+        try {
+            Thread.sleep(2000); // needed for ApiDemos SMS screen
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement recipientField = driver.findElement(
+            AppiumBy.androidUIAutomator(
+                "new UiSelector().className(\"android.widget.EditText\").instance(0)"
+            )
+        );
+
+        recipientField.sendKeys(number);
+    }
+
+
+    @And("the user enters message body {string}")
+    public void the_user_enters_message_body(String message) {
+
+        WebElement messageField = driver.findElement(
+            AppiumBy.androidUIAutomator(
+                "new UiSelector().className(\"android.widget.EditText\").instance(1)"
+            )
+        );
+
+        messageField.sendKeys(message);
+ }
+
+    @And("the user taps on Send button")
+    public void the_user_taps_on_send_button() {
+
+        WebElement sendButton = driver.findElement(
+            AppiumBy.androidUIAutomator(
+                "new UiSelector().textContains(\"Send\")"
+            )
+        );
+
+        sendButton.click();
+    }
+
+    @Then("the SMS intent should be triggered successfully")
+    public void the_sms_intent_should_be_triggered_successfully() {
+
+        Assert.assertTrue(
+            driver.findElements(
+                AppiumBy.androidUIAutomator("new UiSelector().textContains(\"SMS\")")
+            ).size() > 0
+        );
+    }
+    
+ // -------------------- NOTIFICATION FLOW --------------------
+
+//    @When("the user opens App menu")
+//    public void the_user_opens_app_menu() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.accessibilityId("App"))).click();
+//    }
+//
+//    @And("the user opens Notification menu")
+//    public void the_user_opens_notification_menu() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.accessibilityId("Notification"))).click();
+//    }
+//
+//    @And("the user opens Incoming Message screen")
+//    public void the_user_opens_incoming_message_screen() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.accessibilityId("IncomingMessage"))).click();
+//    }
+//
+//    // -------------------- SHOW APP NOTIFICATION --------------------
+//
+//    @And("the user taps on Show App Notification")
+//    public void the_user_taps_on_show_app_notification() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.androidUIAutomator(
+//                        "new UiSelector().text(\"Show App Notification\")"))).click();
+//    }
+//
+//    // -------------------- SHOW INTERSTITIAL NOTIFICATION --------------------
+//
+//    @And("the user taps on Show Interstitial Notification")
+//    public void the_user_taps_on_show_interstitial_notification() {
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                AppiumBy.androidUIAutomator(
+//                        "new UiSelector().text(\"Show Interstitial Notification\")"))).click();
+//    }
+//
+//    // -------------------- NOTIFICATION PANEL --------------------
+//
+//    @And("the user opens the notification panel")
+//    public void the_user_opens_the_notification_panel() {
+//        driver.openNotifications();
+//    }
+//
+//    @And("the user closes the notification panel")
+//    public void the_user_closes_the_notification_panel() {
+//        driver.pressKey(new KeyEvent(AndroidKey.BACK));
+//        driver.pressKey(new KeyEvent(AndroidKey.BACK));
+//    }
+//
+//    // -------------------- VERIFICATION --------------------
+//
+//    @Then("the application should be in foreground")
+//    public void the_application_should_be_in_foreground() {
+//        String currentPackage = driver.getCurrentPackage();
+//        Assert.assertEquals(currentPackage, "io.appium.android.apis");
+//    }
+//
+//    @Then("the interstitial activity should be displayed")
+//    public void the_interstitial_activity_should_be_displayed() {
+//        AndroidDriver androidDriver = (AndroidDriver) driver;  // cast to AndroidDriver
+//        WebDriverWait wait = new WebDriverWait(androidDriver, Duration.ofSeconds(10));
+//
+//        try {
+//            boolean isActive = wait.until(d -> androidDriver.currentActivity().contains("Interstitial"));
+//            Assert.assertTrue(isActive, "Interstitial screen displayed successfully");
+//        } catch (Exception e) {
+//            Assert.fail("Interstitial screen not displayed");
+//        }
+//    }
+//
+//}
+ // -------------------- APP MENU NAVIGATION --------------------
+
+    @When("the user opens App menu")
+    public void the_user_opens_app_menu() {
+        wait.until(ExpectedConditions.elementToBeClickable(
+                AppiumBy.accessibilityId("App"))).click();
+    }
+
+    @And("the user opens Notification menu")
+    public void the_user_opens_notification_menu() {
+        wait.until(ExpectedConditions.elementToBeClickable(
+                AppiumBy.accessibilityId("Notification"))).click();
+    }
+
+    @And("the user opens Incoming Message screen")
+    public void the_user_opens_incoming_message_screen() {
+        wait.until(ExpectedConditions.elementToBeClickable(
+                AppiumBy.accessibilityId("IncomingMessage"))).click();
+    }
+
+    // -------------------- SHOW APP NOTIFICATION --------------------
+
+    @And("the user taps on Show App Notification")
+    public void the_user_taps_on_show_app_notification() {
+        wait.until(ExpectedConditions.elementToBeClickable(
+                AppiumBy.androidUIAutomator(
+                        "new UiSelector().text(\"Show App Notification\")"))).click();
+    }
+
+    
+
+    
+
+    // -------------------- NOTIFICATION PANEL --------------------
+
+    @And("the user opens the notification panel")
+    public void the_user_opens_the_notification_panel() {
+        driver.openNotifications(); // Only for App Notification scenario
+    }
+
+    @And("the user closes the notification panel")
+    public void the_user_closes_the_notification_panel() {
+        driver.pressKey(new KeyEvent(AndroidKey.BACK));
+    }
+
+    // -------------------- VERIFICATION --------------------
+
+    @Then("the application should be in foreground")
+    public void the_application_should_be_in_foreground() {
+        String currentPackage = driver.getCurrentPackage();
+        Assert.assertEquals(currentPackage, "io.appium.android.apis");
+    }
+
+
 }
+
+
+
+
+
+
+
 

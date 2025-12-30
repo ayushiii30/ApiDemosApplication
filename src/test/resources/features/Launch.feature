@@ -41,3 +41,23 @@ Feature: Validate Controls and other screens in ApiDemos app
     And the user selects "Seek Bar"
     Then the Seek Bar screen should be displayed
     And the user moves the slider to 20 percent
+  
+  Scenario: User triggers SMS intent from ApiDemos
+    Given the user launches the ApiDemos application
+    And the user navigates to OS menu
+    And the user opens SMS Messaging screen
+    When the user enters recipient number "1234567890"
+    And the user enters message body "Hello from Appium"
+    And the user taps on Send button
+    Then the SMS intent should be triggered successfully
+
+  Scenario: User triggers App Notification from Incoming Message
+    Given the user launches the ApiDemos application
+    When the user opens App menu
+    And the user opens Notification menu
+    And the user opens Incoming Message screen
+    And the user taps on Show App Notification
+    And the user opens the notification panel
+    And the user closes the notification panel
+    Then the application should be in foreground
+
