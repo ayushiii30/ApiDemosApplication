@@ -456,79 +456,6 @@ public void the_arcs_screen_should_be_displayed() {
         );
     }
     
- // -------------------- NOTIFICATION FLOW --------------------
-
-//    @When("the user opens App menu")
-//    public void the_user_opens_app_menu() {
-//        wait.until(ExpectedConditions.elementToBeClickable(
-//                AppiumBy.accessibilityId("App"))).click();
-//    }
-//
-//    @And("the user opens Notification menu")
-//    public void the_user_opens_notification_menu() {
-//        wait.until(ExpectedConditions.elementToBeClickable(
-//                AppiumBy.accessibilityId("Notification"))).click();
-//    }
-//
-//    @And("the user opens Incoming Message screen")
-//    public void the_user_opens_incoming_message_screen() {
-//        wait.until(ExpectedConditions.elementToBeClickable(
-//                AppiumBy.accessibilityId("IncomingMessage"))).click();
-//    }
-//
-//    // -------------------- SHOW APP NOTIFICATION --------------------
-//
-//    @And("the user taps on Show App Notification")
-//    public void the_user_taps_on_show_app_notification() {
-//        wait.until(ExpectedConditions.elementToBeClickable(
-//                AppiumBy.androidUIAutomator(
-//                        "new UiSelector().text(\"Show App Notification\")"))).click();
-//    }
-//
-//    // -------------------- SHOW INTERSTITIAL NOTIFICATION --------------------
-//
-//    @And("the user taps on Show Interstitial Notification")
-//    public void the_user_taps_on_show_interstitial_notification() {
-//        wait.until(ExpectedConditions.elementToBeClickable(
-//                AppiumBy.androidUIAutomator(
-//                        "new UiSelector().text(\"Show Interstitial Notification\")"))).click();
-//    }
-//
-//    // -------------------- NOTIFICATION PANEL --------------------
-//
-//    @And("the user opens the notification panel")
-//    public void the_user_opens_the_notification_panel() {
-//        driver.openNotifications();
-//    }
-//
-//    @And("the user closes the notification panel")
-//    public void the_user_closes_the_notification_panel() {
-//        driver.pressKey(new KeyEvent(AndroidKey.BACK));
-//        driver.pressKey(new KeyEvent(AndroidKey.BACK));
-//    }
-//
-//    // -------------------- VERIFICATION --------------------
-//
-//    @Then("the application should be in foreground")
-//    public void the_application_should_be_in_foreground() {
-//        String currentPackage = driver.getCurrentPackage();
-//        Assert.assertEquals(currentPackage, "io.appium.android.apis");
-//    }
-//
-//    @Then("the interstitial activity should be displayed")
-//    public void the_interstitial_activity_should_be_displayed() {
-//        AndroidDriver androidDriver = (AndroidDriver) driver;  // cast to AndroidDriver
-//        WebDriverWait wait = new WebDriverWait(androidDriver, Duration.ofSeconds(10));
-//
-//        try {
-//            boolean isActive = wait.until(d -> androidDriver.currentActivity().contains("Interstitial"));
-//            Assert.assertTrue(isActive, "Interstitial screen displayed successfully");
-//        } catch (Exception e) {
-//            Assert.fail("Interstitial screen not displayed");
-//        }
-//    }
-//
-//}
  // -------------------- APP MENU NAVIGATION --------------------
 
     @When("the user opens App menu")
@@ -557,10 +484,6 @@ public void the_arcs_screen_should_be_displayed() {
                 AppiumBy.androidUIAutomator(
                         "new UiSelector().text(\"Show App Notification\")"))).click();
     }
-
-    
-
-    
 
     // -------------------- NOTIFICATION PANEL --------------------
 
